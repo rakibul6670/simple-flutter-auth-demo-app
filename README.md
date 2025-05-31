@@ -85,7 +85,7 @@ dependencies:
 
 # 🧑‍💻 Author
 
-**Rakibul Hasan**  
+**Rakibul Hossain**  
 GitHub: [@rakibul6670](https://github.com/rakibul6670)  
 Email: rakibulpb6670@gmail.com  
 
