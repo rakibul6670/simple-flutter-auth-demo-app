@@ -75,6 +75,7 @@ flutter:
   # assets:
   assets:
     - assets/logo/logo.jpeg
+    - assets/logo/splash_logo.jpeg
     - assets/intro/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

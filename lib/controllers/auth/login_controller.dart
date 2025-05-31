@@ -85,6 +85,11 @@ class LoginController extends GetxController {
           SharedPreferences prefs= await SharedPreferences.getInstance();
           await prefs.setString("userName", matchUser["name"]);
           await prefs.setString("userEmail", matchUser["email"]);
+          //------------login status store-----------
+          await prefs.setBool("isLogin", true);
+
+          //------------user login data diye profile update hobe----
+          userLoading();
 
           //-------------show snack bar when login successful-------
           showCustomSnack(

@@ -7,20 +7,15 @@ import '../../constants/const_text_style.dart';
 import '../../utils/custom_button.dart';
 import '../../utils/custom_text_form_field.dart';
 import '../../utils/custom_text_link.dart';
-import '../../utils/show_custom_snack.dart';
+
 
 
 class SignupScreen extends StatelessWidget {
    SignupScreen({super.key});
 
   //---------------------sign up controller----------------
-  SignupController signupController =SignupController();
+  SignupController signupController =Get.find<SignupController>();
 
-  TextEditingController nameController=TextEditingController();
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
-
-  final formKey=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +40,7 @@ class SignupScreen extends StatelessWidget {
                 )
             ),
             child: Form(
-                key: formKey,
+                key: signupController.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -62,7 +57,7 @@ class SignupScreen extends StatelessWidget {
                     SizedBox(height: 10,),
                     CustomTextFormField(
                       validation: Validation().validateName,
-                      controller: nameController,
+                      controller: signupController.nameController,
                       obscureText: false,
                       errorTextStyle: TextStyle(
                         color: Colors.greenAccent
@@ -86,7 +81,7 @@ class SignupScreen extends StatelessWidget {
                       errorTextStyle: TextStyle(
                           color: Colors.greenAccent
                       ),
-                      controller: emailController,
+                      controller: signupController.emailController,
                       obscureText: false,
                       filled: true,
                       fillColor: Color(0xFF040303),
@@ -116,23 +111,20 @@ class SignupScreen extends StatelessWidget {
                       suffix:SizedBox(
                         height: 20,
                         width: 20,
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: IconButton(
-                              onPressed: () {signupController.togglePasswordVisibility();
-                              },
-                              icon: Icon(
-                                signupController.isPasswordHidden.value?
-                                Icons.visibility_off:
-                                Icons.visibility,color: Colors.white,
-                              )
-                          ),
+                        child: IconButton(
+                            onPressed: () {signupController.togglePasswordVisibility();
+                            },
+                            icon: Icon(
+                              signupController.isPasswordHidden.value?
+                              Icons.visibility_off:
+                              Icons.visibility,color: Colors.white,
+                            )
                         ),
                       ),
                       errorTextStyle: TextStyle(
                           color: Colors.greenAccent
                       ),
-                      controller: passwordController,
+                      controller: signupController.passwordController,
                       filled: true,
                       fillColor: Color(0xFF040303),
 
@@ -174,25 +166,7 @@ class SignupScreen extends StatelessWidget {
 
                     CustomButton(
                       onPressed: (){
-                        if(formKey.currentState!.validate()){
-                          if(signupController.isRemember.value){
-                            signupController.signup({
-                                  "name": nameController.text.trim(),
-                                  "email":emailController.text.trim(),
-                                  "password":passwordController.text.trim(),
-                                });
-                            //-----------Navigate to login screen-------------
-                            Get.offNamed("/loginScreen");
-                          }
-                          else{
-                            showCustomSnack(
-                              title: "Info",
-                              message: "Remember me is not checked!",
-                              icon: Icons.info_outline,
-                              bgColor: Colors.blueAccent,
-                            );
-                          }
-                        }
+                       signupController.signupWithValidation();
                       },
                       buttonName: "Sign up",
                       //backgroundColor: Colors.green,

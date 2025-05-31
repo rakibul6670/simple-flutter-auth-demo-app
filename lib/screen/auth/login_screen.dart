@@ -13,10 +13,6 @@ class LoginScreen extends StatelessWidget {
    //--------------------Login controller----------------
   LoginController loginController=Get.find<LoginController>();
 
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
-
-  final formKey =GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,18 +99,15 @@ class LoginScreen extends StatelessWidget {
                             suffix:SizedBox(
                               height: 20,
                               width: 20,
-                              child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: IconButton(
-                                    onPressed: () {
-                                      loginController.togglePasswordVisibility();
-                                    },
-                                    icon: Icon(
-                                      loginController.isPasswordHidden.value?
-                                      Icons.visibility_off:
-                                      Icons.visibility,color: Colors.white,
-                                    )
-                                ),
+                              child: IconButton(
+                                  onPressed: () {
+                                    loginController.togglePasswordVisibility();
+                                  },
+                                  icon: Icon(
+                                    loginController.isPasswordHidden.value?
+                                    Icons.visibility_off:
+                                    Icons.visibility,color: Colors.white,
+                                  )
                               ),
                             ),
 

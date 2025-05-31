@@ -8,20 +8,49 @@ class SignupController extends GetxController{
 
   RxBool isRemember=false.obs;
 
+  final formKey=GlobalKey<FormState>();
+  TextEditingController emailController =TextEditingController();
+  TextEditingController passwordController =TextEditingController();
+  TextEditingController nameController =TextEditingController();
+
+
   //-----------for password hidden or visibility
   RxBool isPasswordHidden=true.obs;
 
-  //-----------------password toggle
+  //-----------------password toggle----------
   void togglePasswordVisibility(){
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
+  //---------------------Signup with validation---------
+  Future signupWithValidation() async{
+    if(formKey.currentState!.validate()){
+      if(isRemember.value){
+        signup();
+      }
+      else{
+        showCustomSnack(
+          title: "Info",
+          message: "Remember me is not checked!",
+          icon: Icons.info_outline,
+          bgColor: Colors.blueAccent,
+        );
+      }
+    }
+  }
 
-  Future signup(Map<String,dynamic> userData) async{
+
+//---------------------signup------------------
+  Future<dynamic> signup() async{
     try{
       ApiService api =ApiService();
 
-      final response =api.postData(userData);
+      final response =api.postData({
+        "name":nameController.text.trim(),
+        "email": emailController.text.trim(),
+        "password":passwordController.text.trim(),
+      });
+
       if(response != null){
         showCustomSnack(
           title: "Success",
@@ -29,7 +58,8 @@ class SignupController extends GetxController{
           icon: Icons.check_circle_outline,
           bgColor: Colors.green,
         );
-
+        //------------Navigate to login screen------------
+        Get.offNamed("/loginScreen");
       }
       else{
         showCustomSnack(
@@ -44,8 +74,6 @@ class SignupController extends GetxController{
     catch(e){
       Get.snackbar("Error", "$e");
     }
-
-
   }
 
 }
