@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_autho_demo/api_services/api_constant.dart';
 import 'package:http/http.dart' as http;
+
+import '../utils/show_custom_snack.dart';
 
 
 
@@ -16,19 +19,29 @@ class ApiService{
         return jsonDecode(response.body);
       }
       else{
-        print("Data get failed");
+        showCustomSnack(
+          title: "Error",
+          message: "getData failed ${response.statusCode}",
+          icon: Icons.error_outline,
+          bgColor: Colors.redAccent,
+        );
       }
     }
 
 
     catch(e){
-      print("Data get Error: $e");
+      showCustomSnack(
+        title: "Error",
+        message: "getData error: $e",
+        icon: Icons.error_outline,
+        bgColor: Colors.redAccent,
+      );
     }
   }
 
   //----------------------------------POST userData----------------------------------
 
-  Future<void> postData(Map<String,dynamic> userData) async{
+  Future<dynamic> postData(Map<String,dynamic> userData) async{
     try{
       final response= await http.post(
         Uri.parse("${ApiConstant.url}${ApiConstant.endPoint}"),
@@ -39,11 +52,21 @@ class ApiService{
         return jsonDecode(response.body);
       }
       else{
-        print("data post response failed:");
+        showCustomSnack(
+          title: "Error",
+          message: "postData failed! ${response.statusCode}",
+          icon: Icons.error_outline,
+          bgColor: Colors.redAccent,
+        );
       }
     }
     catch(e){
-      print('Data post failed: $e');
+      showCustomSnack(
+        title: "Error",
+        message: "postData error: $e",
+        icon: Icons.error_outline,
+        bgColor: Colors.redAccent,
+      );
     }
   }
 
